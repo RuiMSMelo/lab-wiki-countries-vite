@@ -7,6 +7,11 @@ function CountryDetails() {
 
   const {alpha3Code} = useParams()
 
+  const [oneCountry, setOneCountry] = useState(null)
+  useEffect(() => {
+    
+  },[alpha3Code])
+
   const [countryDetails, setCountryDetails] = useState(null)
   const [countryBorders, setCountryBorders] = useState([])
 
@@ -33,7 +38,11 @@ function CountryDetails() {
       <p><b>Area: </b>{countryDetails.area} km²</p>
       <p><b>Borders: </b></p>
       {countryBorders.map((eachBorder, index) => {
-        return <Link to={`/${eachBorder}`} key={index+eachBorder}>{eachBorder} </Link>
+        return (
+          <ul>
+            <ul><Link to={`/${eachBorder}`} key={index+eachBorder}>{eachBorder} </Link></ul>
+          </ul>
+        )
       })}
       <br></br>
       <br></br>
