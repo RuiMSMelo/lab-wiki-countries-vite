@@ -1,10 +1,8 @@
-body{
-}
-
 .App {
   margin: 50px;
   margin-top: 100px;
   text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .navbar {
@@ -30,5 +28,7 @@ body{
   display: flex;
   justify-content: space-between;
   width: 400px;
-  height: 40px;
+  height: 30px;
+  text-align: center;
+  margin-right: 30px;
 }

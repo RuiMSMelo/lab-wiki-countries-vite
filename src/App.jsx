@@ -8,20 +8,18 @@ import CountryDetails from './components/CountryDetails'
 
 function App() {
 
-  const [countriesState, setCountriesState] = useState(countriesJson)
-
   return (
     <div className="App">
-    <Navbar />  
-      {countriesState.map((eachCountry) => {
-        return(
-          <div key={eachCountry.alpha3Code}><CountriesList eachCountry={eachCountry} /></div> 
-        )
-      })}
-      <Routes>
-        <Route path="/:countryCode" element={<CountryDetails />} />
-      </Routes>
-    </div>
+      <Navbar />  
+
+      <div style={{display: "flex"}}>
+        <CountriesList />
+
+        <Routes>
+          <Route path='/:alpha3Code' element={<CountryDetails />}/>
+        </Routes>
+      </div>
+    </div>  
   )    
 }
 

@@ -1,20 +1,40 @@
+import axios from 'axios'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-function CountriesList({eachCountry}) {
-    const flagCode = (eachCountry.alpha2Code).toString().toLowerCase()
-    const flagUrlOne = "https://flagpedia.net/data/flags/icon/72x54/"
-    const flagUrlTwo = flagCode
-    const flagUrlThree = ".png/"
-    const flagUrl = flagUrlOne+flagUrlTwo+flagUrlThree
+function CountriesList() {
+
+  const [listOfCountries, setListOfCountries] = useState([])
+
+  const getCountries = async () => {
+    const response = await axios.get('https://ih-countries-api.herokuapp.com/countries')
+    //console.log(response)
+    setListOfCountries(response.data)
+  }
+    
+  useEffect(() => {
+    getCountries()
+  }, [])
+
 
   return (
-    <div className='countriesListRow'>
-        <Link to={`${eachCountry.alpha3Code}`} country={eachCountry}> {eachCountry.name.common} </Link>
-        <img className='flagImg' src={flagUrl} /> 
+    <div>
+        {listOfCountries.map((eachCountry, index) => {
+          return (
+            <div key={index+eachCountry.alpha3Code} className="countriesListRow">
+              <img className="flagImg" src={`https://flagpedia.net/data/flags/icon/72x54/${eachCountry.alpha2Code.toLowerCase()}.png`}/>
+              <Link to={`${eachCountry.alpha3Code}`}>
+                {eachCountry.name.common}
+              </Link>
+            </div>
+          )
+        })}
     </div>
     
   )
 }
 
 export default CountriesList
+
+

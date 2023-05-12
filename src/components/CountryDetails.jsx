@@ -1,19 +1,48 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { Link, useParams } from 'react-router-dom'
 
-function CountryDetails({country}) {
-    console.log(country)
-    const {countryCode} = useParams()
-    const oneCountry = country.filter(el => {
-        if (el.alpha3Code === countryCode){
-            console.log(el)
-            return el
-        }
-    })
-    
+function CountryDetails() {
+
+  const {alpha3Code} = useParams()
+
+  const [countryDetails, setCountryDetails] = useState(null)
+  const [countryBorders, setCountryBorders] = useState([])
+
+  const getDetails = async () => {
+    const response = await axios.get(`https://ih-countries-api.herokuapp.com/countries/${alpha3Code}`)
+    setCountryDetails(response.data)
+    setCountryBorders(response.data.borders)
+  }
+
+  useEffect(() => {
+    getDetails()}, [alpha3Code])
+
+    if (!countryDetails) {
+      return <div>...isLoading</div>
+    }
+  
+
   return (
-    <div>{oneCountry}</div>
+    <div>
+      <h1>Each Country Details</h1>
+      <h2>{countryDetails.name.common}</h2>
+      <img src={`https://flagpedia.net/data/flags/icon/72x54/${countryDetails.alpha2Code.toLowerCase()}.png`} />
+      <h4>Capital: {countryDetails.capital}</h4>
+      <p><b>Area: </b>{countryDetails.area} km²</p>
+      <p><b>Borders: </b></p>
+      {countryBorders.map((eachBorder, index) => {
+        return <Link to={`/${eachBorder}`} key={index+eachBorder}>{eachBorder} </Link>
+      })}
+      <br></br>
+      <br></br>
+      <Link to="/">Back to list</Link>
+    </div>
   )
 }
 
 export default CountryDetails
+
+
+//--------------
