@@ -7,10 +7,10 @@ function CountriesList({eachCountry}) {
     const flagUrlTwo = flagCode
     const flagUrlThree = ".png/"
     const flagUrl = flagUrlOne+flagUrlTwo+flagUrlThree
-    console.log (flagUrl)
+
   return (
     <div className='countriesListRow'>
-        <Link> {eachCountry.name.common} </Link>
+        <Link to={`${eachCountry.alpha3Code}`} country={eachCountry}> {eachCountry.name.common} </Link>
         <img className='flagImg' src={flagUrl} /> 
     </div>
     
